@@ -3,11 +3,12 @@ import {history} from 'umi';
 // 定义额外路由变量
 let extraRoutes;
 
-// 动态添加路由
+// 动态添加路由,常与render连用,请求服务端根据响应--动态更新路由，
 export function patchRoutes({ routes }) {
   routes.unshift({
     path: '/foo',
     title: 'foo',
+  // 注意这里component后面不是字符串,而是组件
     component: require('@/pages/user1').default,
   });
 
@@ -23,9 +24,13 @@ export function patchRoutes({ routes }) {
 // 覆写 render, 会在 patchRoutes 之前执行
 export function render(oldRender) {
   // 模拟从服务端请求获得的 路由
-  // fetch('/api/routes').then(res=>res.json()).then((res) => {
-  //
-  // }
+  // fetch('/api/auth').then(auth => {
+  //   if (auth.isLogin) { oldRender() }
+  //   else { 
+  //     history.push('/login'); 
+  //     oldRender()
+  //   }
+  // });
   extraRoutes = [
     {path: '/server', component: '/user2'}
   ]
@@ -46,6 +51,6 @@ export function onRouteChange({ location, routes, action, matchedRoutes }) {
 
   // 设置标题
   if (matchedRoutes.length) {
-    document.title = '融职 - ' + (matchedRoutes[matchedRoutes.length - 1].route.title || '');
+    document.title = '前缀在app.ts中 - ' + (matchedRoutes[matchedRoutes.length - 1].route.title || '');
   }
 }

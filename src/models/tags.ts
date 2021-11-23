@@ -11,6 +11,8 @@ export default {
 
   // 调用服务端接口,获取数据
   effects: {
+    // payload，接收UI组件传递过来的参数，callback回调函数
+    // put，将数据传递给reducers，call调用外部的方法
     *fetchTags({payload, callback}, {put, call}) {
       // 获取tags数据
       const response = yield call(getTags)

@@ -269,7 +269,6 @@ routes: [
 
 ```
 import { Link } from 'umi';
-
 ...
 
 <Link to="/user">用户中心</Link>
